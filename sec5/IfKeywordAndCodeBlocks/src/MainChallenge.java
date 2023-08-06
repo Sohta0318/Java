@@ -7,28 +7,27 @@ public class MainChallenge {
 
         int finalScore = score;
 
-        calculateScore(true, 800, levelCompleted, bonus);
+        int highScore = calculateScore(true, 800, levelCompleted, bonus);
+        System.out.println("The high score is " + highScore);
 
          score = 10000;
          levelCompleted = 8;
          bonus = 200;
 
-         finalScore = score;
+System.out.println("The next high score is "+ calculateScore(gameOver, score, levelCompleted, bonus));
 
-        if(gameOver){
-            finalScore += (levelCompleted * bonus);
-            System.out.println("Your final score was " + finalScore);
-        }
 
     }
 
-    public static void calculateScore(boolean gameOver, int score, int levelCompleted, int bonus){
+    public static int calculateScore(boolean gameOver, int score, int levelCompleted, int bonus){
 
         int finalScore = score;
 
         if(gameOver){
             finalScore += (levelCompleted * bonus);
-            System.out.println("Your final score was " + finalScore);
+//            System.out.println("Your final score was " + finalScore);
         }
+
+        return finalScore;
     }
 }
