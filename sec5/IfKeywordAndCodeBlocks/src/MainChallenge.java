@@ -16,7 +16,6 @@ public class MainChallenge {
 
 System.out.println("The next high score is "+ calculateScore(gameOver, score, levelCompleted, bonus));
 
-
     }
 
     public static int calculateScore(boolean gameOver, int score, int levelCompleted, int bonus){
