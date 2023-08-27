@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CodingExercise/CodingExercise.iml" filepath="$PROJECT_DIR$/CodingExercise/CodingExercise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FirstMethodsChallenge/FirstMethodsChallenge.iml" filepath="$PROJECT_DIR$/FirstMethodsChallenge/FirstMethodsChallenge.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IfKeywordAndCodeBlocks/IfKeywordAndCodeBlocks.iml" filepath="$PROJECT_DIR$/IfKeywordAndCodeBlocks/IfKeywordAndCodeBlocks.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KeywordsAndExpressions/KeywordsAndExpressions.iml" filepath="$PROJECT_DIR$/KeywordsAndExpressions/KeywordsAndExpressions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MethodOverloading/MethodOverloading.iml" filepath="$PROJECT_DIR$/MethodOverloading/MethodOverloading.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SampleCodingExercise/SampleCodingExercise.iml" filepath="$PROJECT_DIR$/SampleCodingExercise/SampleCodingExercise.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/sec5.iml" filepath="$PROJECT_DIR$/.idea/sec5.iml" />
+    </modules>
+  </component>
+</project>
