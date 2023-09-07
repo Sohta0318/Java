@@ -1,6 +1,6 @@
 package dev.lpa;
 
-enum FlightStage implements Trackable{
+enum FlightStages implements Trackable{
     GROUNDED,LAUNCH,CRUISE,DATA_COLLECTION;
 
     @Override
@@ -8,6 +8,11 @@ enum FlightStage implements Trackable{
         if(this != GROUNDED){
             System.out.println("Monitoring " + this);
         }
+    }
+
+    public FlightStages getNextStage(){
+        FlightStages[] allStages = values();
+        return allStages[(ordinal() + 1) % allStages.length];
     }
 }
 
@@ -60,6 +65,14 @@ interface FlightEnable{
     public abstract void takeOff(); // public & abstract modifiers are redundant, meaning unnecessary to declare
     abstract void land(); // abstract modifier is redundant
     void fly(); // this is preferred declaration, public and abstract is implied
+
+    default FlightStages transition(FlightStages stage){
+//        System.out.println("transition not implemented on " + getClass().getName());
+//        return null;
+        FlightStages nextStage = stage.getNextStage();
+        System.out.println("Transition from " + stage + " to " + nextStage);
+        return nextStage;
+    };
 }
 
 interface Trackable{
