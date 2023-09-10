@@ -5,6 +5,10 @@ interface Player {
 }
 
 record BaseballPlayer(String name, String position) implements Player {
+//    @Override
+//    public String name() {
+//        return name;
+//    }
 }
 
 record FootballPlayer(String name, String position) implements Player {
