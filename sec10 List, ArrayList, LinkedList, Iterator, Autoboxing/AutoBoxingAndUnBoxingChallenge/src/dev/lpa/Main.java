@@ -1,10 +1,14 @@
 package dev.lpa;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 record Customer(String name, ArrayList<Double> transactions) {
     public Customer(String name, Double initialDeposit) {
+//        this(name.toUpperCase(), new ArrayList<Double>(Arrays.asList(initialDeposit)));
         this(name.toUpperCase(), new ArrayList<Double>(500));
+
         transactions.add(initialDeposit);
     }
 }
@@ -25,6 +29,8 @@ public class Main {
         bank.addCustomer("bob S", 25);
         bank.addTransaction("Bob S", 100);
         bank.printStatement("Bob S");
+
+//        ArrayList<Double> test = new ArrayList<>(Arrays.asList((double)500));
     }
 }
 
