@@ -1,8 +1,6 @@
 package dev.lpa;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -36,6 +34,15 @@ System.out.println("A:" + (int)'A' + " " + "a:" + (int)'a');
         Comparator<Student> gpaSorter = new StudentGPAComparator();
         Arrays.sort(students, gpaSorter.reversed());
         System.out.println(Arrays.toString(students));
+
+        ArrayList<Student> test = new ArrayList<>(List.of(new Student("Zach"), new Student("Tim"), new Student("Ann")));
+        test.sort(new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.name.compareTo(o2.name);
+            }
+        });
+        System.out.println(test);
     }
 }
 
