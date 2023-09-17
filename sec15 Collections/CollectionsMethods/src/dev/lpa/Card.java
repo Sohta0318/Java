@@ -64,10 +64,10 @@ public record Card(Suit suit, String face, int rank) {
         if (description != null) {
             System.out.println(description);
         }
-        int cardsInRow = deck.size() / rows;
+        int cardsInRow = deck.size() / rows; // 3
         for (int i = 0; i < rows; i++) {
-            int startIndex = i * cardsInRow;
-            int endIndex = startIndex + cardsInRow;
+            int startIndex = i * cardsInRow; // 0
+            int endIndex = startIndex + cardsInRow; // 13
             deck.subList(startIndex, endIndex).forEach(c -> System.out.print(c + " "));
             System.out.println();
         }
