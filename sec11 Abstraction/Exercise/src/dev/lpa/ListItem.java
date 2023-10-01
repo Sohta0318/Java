@@ -1,5 +1,3 @@
-package dev.lpa;
-
 public abstract class ListItem {
     protected ListItem rightLink= null;
     protected ListItem leftLink = null;
@@ -72,7 +70,7 @@ class Node extends ListItem{
 
 class MyLinkedList implements NodeList {
 
-    private ListItem root;
+    private ListItem root = null;
 
     public MyLinkedList(ListItem root) {
         this.root = root;
