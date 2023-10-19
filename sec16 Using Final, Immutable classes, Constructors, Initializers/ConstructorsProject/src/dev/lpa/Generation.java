@@ -28,6 +28,6 @@ public enum Generation {
 
     @Override
     public String toString() {
-        return this.name() + " " + startYear + " - " + endYear
+        return this.name() + " " + startYear + " - " + endYear;
     }
 }
