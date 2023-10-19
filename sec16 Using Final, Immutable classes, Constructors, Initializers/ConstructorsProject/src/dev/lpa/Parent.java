@@ -37,4 +37,8 @@ public class Parent {
     public String toString() {
         return "name= " + name + '\'' + ", dob='" + dob+ '\'';
     }
+//    static{
+//        System.out.println("Parent static Initializer: class being constructed");
+//
+//    }
 }

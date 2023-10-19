@@ -1,4 +1,4 @@
-package dev.external;
+package external;
 
 import dev.lpa.Parent;
 
