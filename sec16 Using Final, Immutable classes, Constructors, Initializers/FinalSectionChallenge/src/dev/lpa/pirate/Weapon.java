@@ -5,7 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 public enum Weapon {
-    KNIFE8(0,10),
+    KNIFE(0,10),
     AXE(0,30),
     MACHETE(1,40),
     PISTOL(1,50);
