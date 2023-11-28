@@ -1,6 +1,8 @@
 package dev.lpa;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String filename = "testing.csv";
 
-        testFile(filename);
+        testFile2(null);
         File file = new File(filename);
         if(!file.exists()){
             System.out.println("I can't run unless this file exist");
@@ -22,15 +24,37 @@ public class Main {
     }
     private static void testFile(String filename) throws IOException {
         Path path = Paths.get(filename);
+        FileReader reader = null;
         try{
-            List<String> lines = Files.readAllLines(path);
+//            List<String> lines = Files.readAllLines(path);
+            reader = new FileReader(filename);
         }catch (IOException e){
             throw new RuntimeException(e);
         }finally {
+            if(reader != null){
+                reader.close();
+            }
             System.out.println("Maybe I'd log something either way...");
         }
         System.out.println("File exists and able to use as resource!");
-
     }
 
+    private static void testFile2(String filename){
+        try (FileReader reader = new FileReader(filename)) {
+        } catch (FileNotFoundException e) {
+            System.out.println("File '" + filename + "' does not exist");
+            throw new RuntimeException(e);
+        }catch (NullPointerException | IllegalArgumentException  badData){
+            System.out.println("User has added bad data" + badData.getMessage());
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }catch (Exception e){
+            System.out.println("Something unrelated and unexpected happened");
+        }
+        finally {
+            System.out.println("Maybe I'd log something either way...");
+        }
+        System.out.println("File exists and able to use as resource!");
+    }
 }
