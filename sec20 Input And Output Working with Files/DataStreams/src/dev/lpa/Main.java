@@ -4,14 +4,20 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-class Player implements Serializable{
+class Player implements Serializable {
+    private final static int version = 2;
+    private final static long serialVersionUID = 1L;
     private String name;
-    private int topScore;
-    private List<String> collectedWeapon = new ArrayList<>();
+    private long topScore;
+    private long bigScore;
+    private final transient long accountId;
+    private List<String> collectedWeapon = new LinkedList<>();
 
-    public Player(String name, int topScore, List<String> collectedWeapon) {
+    public Player(long accountId, String name, int topScore, List<String> collectedWeapon) {
+        this.accountId = accountId;
         this.name = name;
         this.topScore = topScore;
         this.collectedWeapon = collectedWeapon;
@@ -20,27 +26,59 @@ class Player implements Serializable{
     @Override
     public String toString() {
         return "Player{" +
+                "id=" + accountId + ", " +
                 "name='" + name + '\'' +
                 ", topScore=" + topScore +
                 ", collectedWeapon=" + collectedWeapon +
                 '}';
     }
+
+    @Serial
+    @SuppressWarnings("unchecked")
+    private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+//        stream.defaultReadObject();
+//        bigScore = (bigScore == 0) ? 1_000_000_000L : bigScore;
+
+        var serializedVar = stream.readInt();
+        collectedWeapon = (List<String>) stream.readObject();
+        name = stream.readUTF();
+        topScore = (serializedVar == 1) ? stream.readInt() : stream.readLong();
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream stream)throws IOException{
+        System.out.println("--> Customized writing");
+        stream.writeInt(version);
+        stream.writeObject(collectedWeapon);
+        stream.writeUTF(name);
+        stream.writeLong(topScore);
+
+    }
 }
 
 public class Main {
     public static void main(String[] args) {
-        Path dataFile = Path.of("data.dat");
-        writeData(dataFile);
-        readData(dataFile);
+//        Path dataFile = Path.of("data.dat");
+//        writeData(dataFile);
+//        readData(dataFile);
 
-        Player tim = new Player("Tim", 100_000_010,
+        Player tim = new Player(555, "Tim", 100_000_010,
                 List.of("knife", "machete", "pistol"));
         System.out.println(tim);
 
         Path timFile = Path.of("tim.dat");
-        writeObject(timFile, tim);
+//        writeObject(timFile, tim);
         Player reconstitutedTim = readObject(timFile);
         System.out.println(reconstitutedTim);
+
+        Player joe = new Player(556, "Joe", 75,
+                List.of("crossbow", "rifle", "pistol"));
+        Path joeFile = Path.of("joe.dat");
+        writeObject(joeFile, joe);
+        Player reconstituteJoe = readObject(joeFile);
+        System.out.println(joe);
+        System.out.println(reconstituteJoe);
+
     }
 
     private static void writeData(Path dataFile) {
@@ -93,8 +131,8 @@ public class Main {
         }
     }
 
-    private static void readData(Path dataFile){
-        try(DataInputStream dataStream = new DataInputStream(
+    private static void readData(Path dataFile) {
+        try (DataInputStream dataStream = new DataInputStream(
                 Files.newInputStream(dataFile)
         )) {
             System.out.println("myInt = " + dataStream.readInt());
@@ -111,8 +149,8 @@ public class Main {
         }
     }
 
-    private static void writeObject(Path dataFile, Player player){
-        try(ObjectOutputStream objStream = new ObjectOutputStream(
+    private static void writeObject(Path dataFile, Player player) {
+        try (ObjectOutputStream objStream = new ObjectOutputStream(
                 Files.newOutputStream(dataFile)
         )) {
             objStream.writeObject(player);
@@ -121,8 +159,8 @@ public class Main {
         }
     }
 
-    private static Player readObject(Path dataFile){
-        try(ObjectInputStream objStream = new ObjectInputStream(
+    private static Player readObject(Path dataFile) {
+        try (ObjectInputStream objStream = new ObjectInputStream(
                 Files.newInputStream(dataFile)
         )) {
             return (Player) objStream.readObject();
