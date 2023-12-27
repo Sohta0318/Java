@@ -4,22 +4,46 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
-class ColorThreadFactory implements ThreadFactory{
+class ColorThreadFactory implements ThreadFactory {
     private String threadName;
-    public ColorThreadFactory(ThreadColor color){
+    private int colorValue = 1;
+
+    public ColorThreadFactory(ThreadColor color) {
         this.threadName = color.name();
+    }
+
+    public ColorThreadFactory() {
     }
 
     @Override
     public Thread newThread(Runnable r) {
-        Thread thread = new Thread();
-        thread.setName(threadName);
+        Thread thread = new Thread(r);
+        String name = threadName;
+        if (name == null) {
+            name = ThreadColor.values()[colorValue].name();
+        }
+        if (++colorValue > (ThreadColor.values().length - 1)) {
+            colorValue = 1;
+        }
+        thread.setName(name);
         return thread;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
+        int count = 3;
+        var multiExecutor = Executors.newFixedThreadPool(
+                count, new ColorThreadFactory()
+        );
+
+        for (int i = 0; i < count; i++) {
+            multiExecutor.execute(Main::countDown);
+        }
+        multiExecutor.shutdown();
+    }
+
+    public static void singlemain(String[] args) {
         var blueExecutor = Executors.newSingleThreadExecutor(
                 new ColorThreadFactory(ThreadColor.ANSI_BLUE)
         );
@@ -33,7 +57,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        if(isDone){
+        if (isDone) {
             System.out.println("Blue is finished, Yellow start running");
         }
 
@@ -49,7 +73,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        if(isDone){
+        if (isDone) {
             System.out.println("Yellow is finished, Red start running");
         }
 
@@ -65,10 +89,11 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        if(isDone){
+        if (isDone) {
             System.out.println("All process completed");
         }
     }
+
     public static void notmain(String[] args) {
 
         Thread blue = new Thread(Main::countDown, ThreadColor.ANSI_BLUE.name());
@@ -95,18 +120,18 @@ public class Main {
         }
     }
 
-    private static void countDown(){
+    private static void countDown() {
         String threadName = Thread.currentThread().getName();
 //        System.out.println(threadName);
         var threadColor = ThreadColor.ANSI_RESET;
-        try{
+        try {
             threadColor = ThreadColor.valueOf(threadName.toUpperCase());
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             // User may pass a bad color name, Will just ignore this error.
         }
 
         String color = threadColor.color();
-        for(int i = 20; i >= 0; i--){
+        for (int i = 20; i >= 0; i--) {
             System.out.println(color + " " +
                     threadName.replace("ANSI_", "") + " " + i);
         }
