@@ -50,7 +50,7 @@ public class Main {
         long sum = Arrays.stream(numbers).sum();
         System.out.println("sum = " + sum);
 
-        ForkJoinPool threadPool =ForkJoinPool.commonPool();
+        ForkJoinPool threadPool = ForkJoinPool.commonPool();
 
         List<Callable<Long>> tasks = new ArrayList<>();
         int taskNo = 10;
