@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Datasource datasource = new Datasource();
-        if(!datasource.open()){
+        if (!datasource.open()) {
             System.out.println("Can't open datasource");
             return;
         }
@@ -20,24 +20,24 @@ public class Main {
             return;
         }
 
-        for(Artist artist : artists){
+        for (Artist artist : artists) {
             System.out.println("ID = " + artist.getId() + ", Name = " + artist.getName());
         }
 
         List<String> albumsForArtists = datasource.queryAlbumsForArtist("Iron Maiden", Datasource.ORDER_BY_ASC);
 
-        for(String album : albumsForArtists){
+        for (String album : albumsForArtists) {
             System.out.println(album);
         }
 
         List<SongArtist> songArtists = datasource.queryArtistsForSong("Heartless", Datasource.ORDER_BY_DESC);
 
-        if(songArtists == null){
+        if (songArtists == null) {
             System.out.println("Couldn't find the artist for the song");
             return;
         }
 
-        for(SongArtist artist : songArtists){
+        for (SongArtist artist : songArtists) {
             System.out.println("Artist name = " + artist.getArtistName() +
                     " Album name = " + artist.getAlbumName() +
                     " Track = " + artist.getTrack());
@@ -49,6 +49,18 @@ public class Main {
         System.out.println("Number of songs is: " + count);
 
         datasource.createViewForSongArtists();
+
+        songArtists = datasource.querySongInfoView("Go Your Own Way");
+        if (songArtists.isEmpty()) {
+            System.out.println("Couldn't find the artist");
+            return;
+        }
+
+        for (SongArtist artist : songArtists) {
+            System.out.println("Artist name = " + artist.getArtistName() +
+                    " Album name = " + artist.getAlbumName() +
+                    " Track = " + artist.getTrack());
+        }
 
         datasource.close();
     }
