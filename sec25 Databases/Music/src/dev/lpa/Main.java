@@ -13,7 +13,7 @@ public class Main {
             return;
         }
 
-        List<Artist> artists = datasource.queryArtists();
+        List<Artist> artists = datasource.queryArtists(Datasource.ORDER_BY_ASC);
         if (artists == null) {
             System.out.println("No Artists!");
             return;
@@ -22,6 +22,13 @@ public class Main {
         for(Artist artist : artists){
             System.out.println("ID = " + artist.getId() + ", Name = " + artist.getName());
         }
+
+        List<String> albumsForArtists = datasource.queryAlbumsForArtist("Iron Maiden", Datasource.ORDER_BY_ASC);
+
+        for(String album : albumsForArtists){
+            System.out.println(album);
+        }
+
         datasource.close();
     }
 }
