@@ -5,6 +5,7 @@ import dev.lpa.model.Datasource;
 import dev.lpa.model.SongArtist;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -50,14 +51,18 @@ public class Main {
 
         datasource.createViewForSongArtists();
 
-        songArtists = datasource.querySongInfoView("Go Your Own Way");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter a song title:");
+        String title = scanner.nextLine();
+
+        songArtists = datasource.querySongInfoView(title);
         if (songArtists.isEmpty()) {
             System.out.println("Couldn't find the artist");
             return;
         }
 
         for (SongArtist artist : songArtists) {
-            System.out.println("Artist name = " + artist.getArtistName() +
+            System.out.println("FROM VIEW - Artist name = " + artist.getArtistName() +
                     " Album name = " + artist.getAlbumName() +
                     " Track = " + artist.getTrack());
         }
