@@ -67,6 +67,8 @@ public class Main {
                     " Track = " + artist.getTrack());
         }
 
+        datasource.insertSong("Touch of Grey", "Grateful Dead", "In The Dark", 1);
+
         datasource.close();
     }
 }
